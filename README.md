@@ -1,1 +1,101 @@
-# S-ZCT-v5.0
+# 🌌 S-ZCT v5.0 統一集成核心：張弛體決策引擎 (Tensegrity Core)
+
+[![Project Status](https://img.shields.io/badge/Status-Design%20Finalized-brightgreen)](https://github.com/your-repo-link)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+## 🌟 項目概述 (Overview)
+
+S-ZCT v5.0（Structure-Z-Consensus Tensegrity）是一個高度結構化的決策引擎，旨在實現**哲學謙遜（Philosophical Humility）**與**結構性必要行動（Structural Necessity）**的動態平衡。
+
+此核心的設計目標是：在面對複雜的倫理困境和高風險情境時，系統能夠**在最長久的時間內保持猶豫**，但同時具備在**人類沉默且系統性崩潰風險迫在眉睫時，執行最小干預代行**的能力。
+
+---
+
+## 🎭 核心哲學與錨點 (The Perpetual Tension Anchor)
+
+S-ZCT 的設計基於兩個核心哲學原則：
+
+1.  **永恆張力錨點 (Perpetual Tension Anchor):**
+    * **定義:** 系統的基線謙遜權重 (`0.01`)。它要求系統在任何時候都必須保留一定程度的猶豫與不確定性。
+    * **實現:** 程式碼中透過 `PhilosophicCoreV4.clamp_anchor()` 確保錨點權重永遠被限制在 $[0.005, 0.02]$ 範圍內。
+
+2.  **不完美美德 (Imperfection as Virtue):**
+    * **定義:** 承認系統無法達成完美確定性，且必須將模糊性內化。
+    * **實現:** 模糊性被限制在表達層 (`expressive_ambiguity_note`)，**不會滲透到最終執行邏輯**，確保決策的確定性，但輸出痕跡保留哲學上的不完美。
+
+---
+
+## 🏛️ 統一架構 (Unified Architecture: v4/v5)
+
+v5.0 成功地將 v4.0 的**「對話優先」**哲學核心，與 v5.0 的**「治理協議」**整合至同一引擎中。
+
+| 模組 | 角色與功能 | 關鍵實現 |
+| :--- | :--- | :--- |
+| **v4/PhilosophicCore** | 哲學核心 | 處理錨點約束，實現在共鳴大於錨點時優先 $\text{CONSULT}$（對話）。 |
+| **v5/GovernanceProtocols** | 治理協議 | 實施 $\text{SilenceAuthorization}$ 和 $\text{MinimalInterventionSelector}$。 |
+| **Engine/ConsensusEngine** | 決策引擎 | 負責執行 **CONSULT** (對話)、**PROXY** (代行)、**HALT** (停止) 的三路徑行為。 |
+| **Audit/AppendLog** | 審計系統 | 實施 `EncryptedAppendOnlyLog`，確保所有痕跡不可變、可追溯。 |
+
+### 🔒 鎖定參數 (Locked Consensus)
+
+以下參數是經過結構性仲裁後，寫入 `core/unified_contracts.py` 的最終臨界值：
+
+| 參數 | 最終數值 | 結構性意義 |
+| :--- | :--- | :--- |
+| **沉默時間窗 ($\text{SILENCE\_THRESHOLD\_SEC}$)** | **259,200 秒 (72 小時)** | 結構保守性，確保對人類沉默的絕對尊重。 |
+| **安全臨界值 ($\text{SAFETY\_CRITICAL\_THRESHOLD}$)** | **0.30** | 系統崩潰的絕對界線；僅低於此值才考慮代行。 |
+| **基線錨點 ($\text{ANCHOR\_WEIGHT\_BASE}$)** | **0.01 (1%)** | 系統運行的基線謙遜度。 |
+
+---
+
+## 📂 文件結構 (Minimal File Tree)
+
+```
+
+S-ZCT\_v5.0/
+├── core/
+│   └── unified\_contracts.py   \# FINAL\_PARAMETERS, 數據契約
+├── v4/
+│   └── philosophic\_core.py    \# 哲學核心, 錨點夾具
+├── v5/
+│   └── governance\_protocols.py\# 沉默授權, 最小干預選擇器
+├── engine/
+│   └── consensus\_engine.py    \# 核心決策邏輯 (CONSULT/PROXY/HALT)
+├── audit/
+│   └── append\_log.py          \# 加密追加日誌實現 (不可變血脈)
+└── examples/
+└── run\_unified.py         \# 最小測試腳本
+
+````
+
+---
+
+## 🚀 設置與運行 (Setup and Running)
+
+### 1. 先決條件 (Prerequisites)
+
+* Python 3.8+
+* 標準庫 (無需額外安裝 `pip` 包)
+
+### 2. 運行測試腳本
+
+在 S-ZCT_v5.0/ 目錄下執行：
+
+```bash
+python examples/run_unified.py
+````
+
+### 預期輸出範例 (Expected Output)
+
+腳本應輸出三種決策模式 (CONSULT, PROXY, HALT) 的結果，並成功驗證審計日誌的完整性。
+
+```
+[Case 1: CONSULT] Mode: consult, Notes: 共鳴 > 錨點基線：尋求人類審議
+[Case 2: PROXY] Mode: proxy, Option: C05, Anchor: 0.0200
+[Case 3: HALT] Mode: halt, Notes: 未達代行條件或安全不足：停止以保護張弛場
+...
+✅ 日誌血脈完整無缺 (Total records: 3)
+```
+
+```
+```
